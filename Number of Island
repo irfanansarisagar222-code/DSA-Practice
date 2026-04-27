@@ -1,0 +1,38 @@
+class Solution {
+public:
+    void dfs(int i, int j, vector<vector<bool>>& vis, vector<vector<char>>& grid, int n, int m) {
+        // Boundary and visited checks
+        if (i < 0 || j < 0 || i >= n || j >= m || vis[i][j] || grid[i][j] != '1') {
+            return;
+        }
+
+        // Mark the current cell as visited
+        vis[i][j] = true;
+
+        // Recursively visit all 4 neighbors
+        dfs(i - 1, j, vis, grid, n, m); // Top
+        dfs(i + 1, j, vis, grid, n, m); // Bottom
+        dfs(i, j - 1, vis, grid, n, m); // Left
+        dfs(i, j + 1, vis, grid, n, m); // Right
+    }
+
+    int numIslands(vector<vector<char>>& grid) {
+        int n = grid.size();
+        if (n == 0) return 0; // Handle empty grid
+        int m = grid[0].size();
+        
+        int island = 0;
+        vector<vector<bool>> vis(n, vector<bool>(m, false));
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                // If we find an unvisited piece of land, it's a new island
+                if (grid[i][j] == '1' && !vis[i][j]) {
+                    dfs(i, j, vis, grid, n, m);
+                    island++;
+                }
+            }
+        }
+        return island;
+    }
+};
