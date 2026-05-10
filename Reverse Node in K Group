@@ -1,0 +1,31 @@
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        ListNode* temp=head;
+        int cnt=0;
+        //Check if K nodes exist
+        while(cnt<k){
+            if(temp==NULL){
+                return head;
+            }
+        temp=temp->next;
+        cnt++;
+    }
+
+    //Recursively call for Rest of LL
+    ListNode* prevNode = reverseKGroup(temp,k);
+
+    //Reverse current Group
+     temp = head;
+     cnt=0;
+    while(cnt<k){
+        ListNode* next=temp->next;
+        temp->next=prevNode;
+
+        prevNode =temp;
+        temp=next;
+        cnt++;
+    }
+    return prevNode;
+    }
+};
